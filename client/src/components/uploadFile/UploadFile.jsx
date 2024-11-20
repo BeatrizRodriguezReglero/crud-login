@@ -49,7 +49,7 @@ const handleSubmit=async(event,file,userData,setUserData)=>{
     formData.append('image',file)
     
     try {
-        const response = await fetch('http://localhost:3000/api/upload',{
+        const response = await fetch(`http://localhost:3000/api/upload/${userData.id}`,{
             method: 'POST',
             body:formData
         })
@@ -59,7 +59,7 @@ const handleSubmit=async(event,file,userData,setUserData)=>{
         const result= await response.json()
         console.log('File uploaded successfully:', result)
 
-        const uploadedImageUrl = result.url;
+        const uploadedImageUrl = result.image;
         console.log(uploadedImageUrl)
         
         setUserData({...userData,image:uploadedImageUrl});

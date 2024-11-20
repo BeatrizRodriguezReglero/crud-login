@@ -15,10 +15,12 @@ userController.patchUser = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await UserModel.findById(id);
+    console.log(user);
 
     if (!user) return res.status(409).json({ error: 'User not found' });
 
-    await UserModel.updateOne({ _id: id }, { $set: req.body });
+    console.log('USER BODY', req.body);
+    await UserModel.updateOne({ _id: id }, { $set: { ...req.body } });
 
     const users = await UserModel.find();
     res.status(202).json(users);
