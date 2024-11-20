@@ -1,13 +1,13 @@
 import { useState } from "react"
 import{fileReaderPromise} from '../../../../server/src/utils/fileReader'
 
-const UploadFile=({ setUserData })=>{
+const UploadFile=({userData, setUserData })=>{
     console.log("Tipo de setUserData:", typeof setUserData);
     const[preview,setPreview]= useState(null)
     const[file,setFile]= useState(null)
     return( 
         <>
-        <form onSubmit={(event)=>handleSubmit(event,file,setUserData)} >
+        <form onSubmit={(event)=>handleSubmit(event,file,userData,setUserData)} >
             <input type="file" name='image' onChange={(event)=>handleFileChange(event,setFile,setPreview)} />
             <input type="submit" value='Upload' disabled={!file}/>
         </form>
@@ -39,7 +39,7 @@ const handleFileChange=async(event,setFile,setPreview)=>{
 
    
 }
-const handleSubmit=async(event,file,setUserData)=>{
+const handleSubmit=async(event,file,userData,setUserData)=>{
     event.preventDefault()
     if(!file){
         console.error('No file selected')
@@ -62,11 +62,8 @@ const handleSubmit=async(event,file,setUserData)=>{
         const uploadedImageUrl = result.url;
         console.log(uploadedImageUrl)
         
-        setUserData(prevData => ({
-            ...prevData,
-            image: uploadedImageUrl, // Actualiza la URL de la imagen del perfil
-        }));
-        console.log(prevData)
+        setUserData({...userData,image:uploadedImageUrl});
+        
        
     } catch (error) { 
         console.log('Error uploading file:', error)

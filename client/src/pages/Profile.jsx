@@ -35,12 +35,12 @@ const Profile=()=>{
 	}, [userData]);
     if (loading) return <h1>Loading...</h1>;
 	if (users.length === 0) return <h1>No users found.</h1>;
-    
+    console.log(users)
     return(
         <>
         <h1>Hola {' '}
-					{userData.username.charAt(0).toUpperCase() +
-					userData.username.slice(1).toLowerCase()}</h1>
+					{userData?.username?.charAt(0).toUpperCase() +
+					userData?.username?.slice(1).toLowerCase()}</h1>
         <UploadFile userId={userData.id} setUserData={setUserData} />
         <button onClick={()=>navigate('/')}> Go Back</button>
         <Logout/>
